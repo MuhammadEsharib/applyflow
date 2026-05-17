@@ -3,9 +3,11 @@ import { ArrowRight, Star, Quote, ChevronLeft, ChevronRight, TrendingUp, Award, 
 import { Button } from '../components/ui/Button';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { useAuthStore } from '../features';
 
 export default function LandingPage() {
   const navigate = useNavigate();
+  const { loginAsAdmin } = useAuthStore();
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [currentChart, setCurrentChart] = useState(0);
   const [showAdminLogin, setShowAdminLogin] = useState(false);
@@ -90,11 +92,10 @@ export default function LandingPage() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [showAdminLogin]);
 
-  const handleAdminLogin = (e: React.FormEvent) => {
+  const handleAdminLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simple hardcoded admin credentials (in production, this should be server-side)
-    if (adminCredentials.username === 'admin' && adminCredentials.password === 'applyflow2024') {
-      localStorage.setItem('isAdmin', 'true');
+    const success = await loginAsAdmin(adminCredentials.username, adminCredentials.password);
+    if (success) {
       navigate('/app/admin');
     } else {
       setAdminError('Invalid credentials');
@@ -217,6 +218,79 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
+      {/* Admin Login Modal */}
+      <AnimatePresence>
+        {showAdminLogin && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+            onClick={() => setShowAdminLogin(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl"
+              onClick={e => e.stopPropagation()}
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-12 h-12 rounded-xl bg-blue-500 flex items-center justify-center">
+                  <Lock className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-black">Admin Access</h3>
+                  <p className="text-sm text-black/60">Enter your credentials</p>
+                </div>
+              </div>
+              <form onSubmit={handleAdminLogin} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-black">Username</label>
+                  <input
+                    type="text"
+                    value={adminCredentials.username}
+                    onChange={(e) => setAdminCredentials({ ...adminCredentials, username: e.target.value })}
+                    placeholder="Enter username"
+                    autoFocus
+                    className="w-full px-4 py-2 rounded-xl border border-border focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-black">Password</label>
+                  <input
+                    type="password"
+                    value={adminCredentials.password}
+                    onChange={(e) => setAdminCredentials({ ...adminCredentials, password: e.target.value })}
+                    placeholder="Enter password"
+                    className="w-full px-4 py-2 rounded-xl border border-border focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+                  />
+                </div>
+                {adminError && (
+                  <p className="text-red-500 text-sm">{adminError}</p>
+                )}
+                <div className="flex gap-3 pt-2">
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    onClick={() => setShowAdminLogin(false)}
+                    className="flex-1"
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    type="submit"
+                    className="flex-1 bg-blue-500 hover:bg-blue-600 text-white"
+                  >
+                    Login
+                  </Button>
+                </div>
+              </form>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Organic Mesh Gradient Background */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none -z-10">
         <div className="absolute top-20 left-20 w-96 h-96 bg-blue-100/30 rounded-full blur-3xl" />

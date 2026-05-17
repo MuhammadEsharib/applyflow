@@ -382,7 +382,7 @@ export default function Help() {
         <Button
           variant="ghost"
           className="flex items-center gap-2 h-auto p-4"
-          onClick={() => window.open('/app/documentation', '_blank')}
+          onClick={() => handleComingSoon('Documentation')}
         >
           <BookOpen className="w-5 h-5" />
           <div className="text-left">
@@ -393,7 +393,7 @@ export default function Help() {
         <Button
           variant="ghost"
           className="flex items-center gap-2 h-auto p-4"
-          onClick={() => window.open('/app/community', '_blank')}
+          onClick={() => handleComingSoon('Community')}
         >
           <Users className="w-5 h-5" />
           <div className="text-left">
@@ -404,7 +404,7 @@ export default function Help() {
         <Button
           variant="ghost"
           className="flex items-center gap-2 h-auto p-4"
-          onClick={() => window.open('/app/livechat', '_blank')}
+          onClick={() => handleComingSoon('Live Chat')}
         >
           <MessageCircle className="w-5 h-5" />
           <div className="text-left">
@@ -637,7 +637,7 @@ export default function Help() {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Button variant="ghost" className="flex items-center gap-2 h-auto p-4" onClick={() => window.open('/app/resume-templates', '_blank')}>
+            <Button variant="ghost" className="flex items-center gap-2 h-auto p-4" onClick={() => handleComingSoon('Resume Templates')}>
               <FileText className="w-5 h-5" />
               <div className="text-left">
                 <div className="font-medium">Resume Templates</div>
@@ -645,7 +645,7 @@ export default function Help() {
               </div>
               <ExternalLink className="w-4 h-4 ml-auto" />
             </Button>
-            <Button variant="ghost" className="flex items-center gap-2 h-auto p-4" onClick={() => window.open('/app/interview-tips', '_blank')}>
+            <Button variant="ghost" className="flex items-center gap-2 h-auto p-4" onClick={() => handleComingSoon('Interview Tips')}>
               <Video className="w-5 h-5" />
               <div className="text-left">
                 <div className="font-medium">Interview Tips</div>
@@ -653,7 +653,7 @@ export default function Help() {
               </div>
               <ExternalLink className="w-4 h-4 ml-auto" />
             </Button>
-            <Button variant="ghost" className="flex items-center gap-2 h-auto p-4" onClick={() => window.open('/app/career-blog', '_blank')}>
+            <Button variant="ghost" className="flex items-center gap-2 h-auto p-4" onClick={() => handleComingSoon('Career Blog')}>
               <BookOpen className="w-5 h-5" />
               <div className="text-left">
                 <div className="font-medium">Career Blog</div>

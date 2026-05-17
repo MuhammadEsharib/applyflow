@@ -56,7 +56,7 @@ export const useAuthStore = create<AuthState>((set, get) => {
     },
 
     loginAsAdmin: async (username, password) => {
-      if (username === 'admin' && password === 'admin123') {
+      if (username === 'admin' && password === 'applyflow2024') {
         const user: User = {
           id: 'admin-001',
           name: 'Administrator',

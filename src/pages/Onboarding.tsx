@@ -8,6 +8,7 @@ import { useAuthStore } from '../features';
 import { useGuestStore, type DemoProfile } from '../store/modules/guestStore';
 import { useNavigate } from 'react-router-dom';
 import { slideUp, motionConfig } from '../lib/motion';
+import { supabase } from '../lib/supabase';
 
 type Step = 'welcome' | 'login' | 'profile' | 'admin' | 'complete';
 
@@ -15,11 +16,13 @@ export default function Onboarding() {
   const [step, setStep] = useState<Step>('welcome');
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
+  const [authError, setAuthError] = useState('');
   const [selectedProfile, setSelectedProfile] = useState<DemoProfile | null>(null);
   const [adminCredentials, setAdminCredentials] = useState({ username: '', password: '' });
   const [adminError, setAdminError] = useState('');
   const navigate = useNavigate();
-  const { loginAsGuest, login } = useAuthStore();
+  const { loginAsGuest, login, loginAsAdmin } = useAuthStore();
   const { enableGuestMode, loadDemoData } = useGuestStore();
 
   const handleGuestMode = () => {
@@ -35,14 +38,39 @@ export default function Onboarding() {
   };
 
   const handleLogin = async () => {
+    if (!email || !password || !name) {
+      setAuthError('Please fill in all fields');
+      return;
+    }
+    if (password.length < 6) {
+      setAuthError('Password must be at least 6 characters');
+      return;
+    }
+    
+    setAuthError('');
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          name,
+        }
+      }
+    });
+
+    if (error) {
+      setAuthError(error.message);
+      return;
+    }
+
     await login(email);
     setStep('complete');
   };
 
-  const handleAdminLogin = (e: React.FormEvent) => {
+  const handleAdminLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (adminCredentials.username === 'admin' && adminCredentials.password === 'applyflow2024') {
-      localStorage.setItem('isAdmin', 'true');
+    const success = await loginAsAdmin(adminCredentials.username, adminCredentials.password);
+    if (success) {
       navigate('/app/admin');
     } else {
       setAdminError('Invalid credentials');
@@ -163,6 +191,18 @@ export default function Onboarding() {
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-black">
+                    Password
+                  </label>
+                  <Input
+                    type="password"
+                    placeholder="Password (min 6 chars)"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
+                {authError && <p className="text-red-500 text-sm font-medium">{authError}</p>}
                 <div className="flex gap-3 pt-2">
                   <Button
                     variant="ghost"
@@ -175,7 +215,7 @@ export default function Onboarding() {
                   <Button
                     className="flex-1"
                     onClick={handleLogin}
-                    disabled={!email || !name}
+                    disabled={!email || !name || !password}
                   >
                     Continue
                     <ArrowRight className="ml-2 h-4 w-4" />
