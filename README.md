@@ -1,35 +1,46 @@
 # ApplyFlow
 
-A modern job application tracking system built with React and TypeScript.
+A modern job application tracking platform designed to streamline your job search journey. Built with React and TypeScript, ApplyFlow provides powerful tools to manage applications, optimize resumes, prepare for interviews, and gain insights into your career progress.
 
-## Features
+## ✨ Features
 
-- **Application Tracking** — Manage job applications with status updates, priorities, and notes
-- **Kanban Board** — Drag-and-drop interface for organizing applications
-- **Resume Templates** — Professional, ATS-friendly resume templates
-- **Interview Tips** — Expert guidance and strategies for interview preparation
-- **Analytics Dashboard** — Visual insights into your job search progress
-- **Live Chat** — Real-time support and career assistance
-- **Community** — Connect with other job seekers and share experiences
-- **AI Assistant** — Smart career guidance and application optimization
-- **Admin Panel** — Manage system settings and user activities
-- **PDF Export** — Download resumes and documentation as PDFs
-- **Guest Mode** — Try features without registration
+- **Application Tracking** — Organize and manage job applications with status updates, priorities, deadlines, and custom notes
+- **Kanban Board** — Visual drag-and-drop interface for organizing applications across different stages
+- **Resume Builder & Templates** — Create professional, ATS-optimized resumes using customizable templates
+- **Interview Preparation** — Access expert tips, strategies, and resources to ace your interviews
+- **Analytics Dashboard** — Track job search performance with interactive charts and meaningful insights
+- **AI Career Assistant** — Receive intelligent recommendations for resume optimization and application improvements
+- **Live Chat Support** — Real-time assistance and career guidance from our support team
+- **Community Platform** — Connect with other job seekers, share experiences, and exchange advice
+- **Admin Dashboard** — Comprehensive tools for managing users, settings, and platform activities
+- **PDF Export** — Download resumes and documents in high-quality PDF format
+- **Guest Access** — Explore core features without creating an account
 
-## Tech Stack
+## 🛠️ Tech Stack
 
-- React 19 + TypeScript
-- Vite
-- Tailwind CSS 4
-- Zustand (State Management)
-- Framer Motion (Animations)
-- React Router DOM
-- Recharts (Charts)
-- jsPDF + html2canvas (PDF Export)
+| Layer | Technologies |
+|-------|--------------|
+| **Frontend** | React 19, TypeScript, Vite |
+| **Styling** | Tailwind CSS 4 |
+| **State Management** | Zustand |
+| **Animations** | Framer Motion |
+| **Routing** | React Router DOM |
+| **Charts & Analytics** | Recharts |
+| **PDF Generation** | jsPDF, html2canvas |
 
-## Quick Start
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js (v16 or higher)
+- npm or yarn
+
+### Installation & Development
 
 ```bash
+# Clone the repository
+git clone https://github.com/MuhammadEsharib/applyflow.git
+cd applyflow
+
 # Install dependencies
 npm install
 
@@ -44,38 +55,3 @@ npm run preview
 
 # Run linting
 npm run lint
-```
-
-## Project Structure
-
-```
-src/
-├── app/           # App configuration and routes
-├── components/    # Reusable UI components
-├── features/      # Feature modules (jobs, auth, notifications)
-├── hooks/         # Custom React hooks
-├── layouts/       # Page layouts
-├── lib/           # Utility libraries
-├── pages/         # Page components
-├── store/         # Zustand stores
-└── types/         # TypeScript types
-```
-
-## Scripts
-
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Build for production |
-| `npm run preview` | Preview production build |
-| `npm run lint` | Run ESLint |
-
-## Browser Support
-
-- Chrome/Edge (latest)
-- Firefox (latest)
-- Safari (latest)
-
-## License
-
-MIT
